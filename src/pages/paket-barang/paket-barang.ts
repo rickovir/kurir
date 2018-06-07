@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { PaketBarang } from '../../models/PaketBarang';
 
 /**
  * Generated class for the PaketBarangPage page.
@@ -14,7 +15,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'paket-barang.html',
 })
 export class PaketBarangPage {
-
+	paket:PaketBarang;
+	
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
