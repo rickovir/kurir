@@ -14,22 +14,7 @@ export class PaketBarang{
 	jenis_paket:string;
 	tarif:number;
 	created_on:number;
-
-	constructor(){
-		this.IDPaket = 0;
-		this.IDCabang = 0;
-		this.nama_paket = "";
-		this.no_resi = "";
-		this.nama_pengirim = "";
-		this.alamat_pengirim = "";
-		this.telepon_pengirim = "";
-		this.nama_penerima = "";
-		this.alamat_penerima = "";
-		this.telepon_penerima = 0;
-		this.berat = 0;
-		this.kategori_paket = "";
-		this.jenis_paket = "";
-		this.tarif = 0;
-		this.created_on = 0;
-	}
+	lat:number;
+	lng:number;
+	status_pengiriman:string;
 }

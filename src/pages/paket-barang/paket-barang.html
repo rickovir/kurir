@@ -8,55 +8,70 @@
 
   <ion-navbar>
     <ion-title>PaketBarang</ion-title>
+    <ion-buttons start>
+      <button ion-button color="primary" (click)="save()">Save</button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
+	<div class="loader" *ngIf="loader">
+		<ion-spinner name="crescent"></ion-spinner>
+	</div>
 	<ion-list>
 	  <ion-list-header>
 	    Pengiriman Paket Barang
 	  </ion-list-header>
 	  <ion-item>
 	  	<p>Nama Paket :</p>
-	  	<p item-end>Barang Dadakan</p>
+	  	<p item-end>{{ paket.nama_paket }}</p>
 	  </ion-item>
 	  <ion-item>
 	  	<p>Nomor Resi :</p>
-	  	<p item-end>234234333</p>
+	  	<p item-end>{{ paket.no_resi }}</p>
 	  </ion-item>
 	  <ion-item>
 	  	<p>Nama Penerima :</p>
-	  	<p item-end>Andi</p>
+	  	<p item-end>{{ paket.nama_penerima }}</p>
 	  </ion-item>
 	  <ion-item>
 	  	<p>Alamat Penerima :</p>
-	  	<p item-end>Jalan Aksara 2</p>
+	  	<p item-end>{{ paket.alamat_penerima }}</p>
 	  </ion-item>
 	  <ion-item>
 	  	<p>Telepon Penerima :</p>
-	  	<p item-end>+6289787746727</p>
+	  	<p item-end>{{ paket.telepon_penerima }}</p>
 	  </ion-item>
 	  <ion-item>
 	  	<ion-label floating>Masukkan Status Kirim</ion-label>
-		<ion-textarea ></ion-textarea>
+		<ion-textarea [(ngModel)]="keterangan" value="{{ paket.keterangan }}"></ion-textarea>
 	  </ion-item>
 	  <ion-item>
 	  	<p>Status Kirim</p>
 	  	<ion-row>
 		    <ion-col>
-		      <button ion-button color="secondary" icon-left outline>
+		      <button ion-button (click)="ubahStatus('SUKSES')" *ngIf="paket.status_pengiriman != 'SUKSES'" color="secondary" icon-left outline>
+		        Success
+		      </button>
+		      <button ion-button (click)="ubahStatus('SUKSES')" *ngIf="paket.status_pengiriman == 'SUKSES'" color="secondary" icon-left >
 		        Success
 		      </button>
 		    </ion-col>
 		    <ion-col>
-		      <button ion-button color="dark" icon-left outline>
+		      <button ion-button (click)="ubahStatus('PENDING')" *ngIf="paket.status_pengiriman != 'PENDING'" color="dark" icon-left outline>
+		        Pending
+		      </button>
+		      <button ion-button (click)="ubahStatus('PENDING')" *ngIf="paket.status_pengiriman == 'PENDING'" color="dark" icon-left >
 		        Pending
 		      </button>
 		    </ion-col>
 		    <ion-col>
-		      <button ion-button color="danger" icon-left outline>
+		      <button *ngIf="paket.status_pengiriman != 'GAGAL'" ion-button (click)="ubahStatus('GAGAL')" color="danger" icon-left outline>
+		        Gagal
+		      </button>
+		      <button *ngIf="paket.status_pengiriman == 'GAGAL'" ion-button (click)="ubahStatus('GAGAL')" color="danger" icon-left >
 		        Gagal
 		      </button>
 		    </ion-col>
@@ -69,31 +84,31 @@
 	  
 	  <ion-item>
 	  	<p>Nama Pengirim :</p>
-	  	<p item-end>Ricko virnanda</p>
+	  	<p item-end>{{ paket.nama_pengirim }}</p>
 	  </ion-item>
 	  <ion-item>
 	  	<p>Alamat Pengirim :</p>
-	  	<p item-end>Jalan ajeg ajeg</p>
+	  	<p item-end>{{ paket.alamat_pengirim }}</p>
 	  </ion-item>
 	  <ion-item>
 	  	<p>Telepon Pengirim :</p>
-	  	<p item-end>+62889839384</p>
+	  	<p item-end>{{ paket.telepon_pengirim }}</p>
 	  </ion-item>
 	  <ion-item>
 	  	<p>Berat :</p>
-	  	<p item-end>1 Km</p>
+	  	<p item-end>{{ paket.berat }} KG</p>
 	  </ion-item>
 	  <ion-item>
 	  	<p>Kategori Paket :</p>
-	  	<p item-end>BRG</p>
+	  	<p item-end>{{ paket.kategori_paket }}</p>
 	  </ion-item>
 	  <ion-item>
 	  	<p>Jenis Paket :</p>
-	  	<p item-end>EXP</p>
+	  	<p item-end>{{ paket.jenis_paket }}</p>
 	  </ion-item>
 	  <ion-item>
 	  	<p>Tarif :</p>
-	  	<p item-end>Rp. 3.000</p>
+	  	<p item-end>{{ paket.tarif }}</p>
 	  </ion-item>
 	</ion-list>
 </ion-content>

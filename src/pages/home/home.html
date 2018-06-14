@@ -1,6 +1,16 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Task Pengiriman Kurir</ion-title>
+    <ion-buttons start>
+      <button ion-button *ngIf="isOnline" color="primary" icon-start>
+        <ion-icon name="cloud-done"></ion-icon>
+        Online
+      </button>
+      <button ion-button *ngIf="!isOnline" color="danger" icon-start>
+        <ion-icon name="cloud-outline"></ion-icon>
+        Offline
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -9,16 +19,27 @@
     <ion-list-header>
       <p item-start><b>ID</b></p>
       <p>Nama Paket</p>
-      <button ion-button color="primary" outline item-end>Jarak</button>
-      <button ion-button color="danger" outline item-end>Prioritas</button>
+      <button ion-button color="primary" outline item-end (click)="sortByJarak()">Jarak</button>
+      <button ion-button color="danger" outline item-end (click)="sortByPrioritas()">Prioritas</button>
     </ion-list-header>
 
-    <ion-item *ngFor="let list of list_pengiriman">
+    <ion-item *ngFor="let list of list_pengiriman" (click)="goToDetail(list, list.IDPengiriman)">
       <p item-start><b>{{ list.IDPengiriman }}</b></p>
-      <p>{{ list.IDPaket }}</p>
-      <button ion-button color="primary" outline item-end>12 Km</button>
-      <button ion-button color="danger" outline item-end>1</button>
+      <p>{{ list.nama_paket }}</p>
+      <button ion-button color="primary" outline item-end>{{ getJarak(list.lat,list.lng) }} M</button>
+      <button ion-button color="danger" outline item-end>{{ list.prioritas }}</button>
+
+      <button *ngIf="list.status_pengiriman == 'SUKSES'" ion-button color="secondary" round item-end>
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+      <button *ngIf="list.status_pengiriman == 'PENDING'" ion-button color="light" round item-end>
+        <ion-icon name="clipboard"></ion-icon>
+      </button>
+      <button *ngIf="list.status_pengiriman == 'GAGAL'" ion-button color="danger" round item-end>
+        <ion-icon name="close"></ion-icon>
+      </button>
     </ion-item>
-    
+    <button ion-button round block color="primary">Submit Selesai</button>
   </ion-list>
+
 </ion-content>
