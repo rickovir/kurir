@@ -219,11 +219,12 @@ export class HomePage {
 		}
 
 	}
-	goToDetail(data, IDPengiriman)
+	goToDetail(data, IDPengiriman, IDKurir)
 	{
 		let dataModal = {
 			paket_barang : JSON.stringify(data),
-			IDPengiriman : IDPengiriman
+			IDPengiriman : IDPengiriman,
+			IDKurir : IDKurir
 		};
     	let modal = this.modalCtrl.create(PaketBarangPage,dataModal);
 	

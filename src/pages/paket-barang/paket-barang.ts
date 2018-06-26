@@ -20,6 +20,7 @@ export class PaketBarangPage {
 	paket:PaketBarang;
   keterangan:string;
   IDPengiriman:number;
+  IDKurir:number;
   loader:boolean;
 	
   constructor(public navCtrl: NavController, 
@@ -29,6 +30,7 @@ export class PaketBarangPage {
     public loadingCtrl: LoadingController) {
   	this.paket = JSON.parse(this.navParams.get('paket_barang'));
     this.IDPengiriman = this.navParams.get('IDPengiriman');
+    this.IDKurir = this.navParams.get('IDKurir');
     console.log(this.paket);
     console.log('IDPengiriman :'+this.IDPengiriman);
     this.loader = false;
@@ -51,7 +53,9 @@ export class PaketBarangPage {
   save()
   {
     this.loader = true;
-    let save = this.listPengirimanProvider.updateStatus(this.IDPengiriman,this.paket.status_pengiriman, this.keterangan);
+   this.loader = false;
+   this.dismissMe();
+    let save = this.listPengirimanProvider.updateStatus(this.IDPengiriman,this.paket.IDPaket, this.IDKurir, this.paket.no_resi ,this.paket.status_pengiriman, this.keterangan);
       save.subscribe(
         data=>{
           if(data.status == "OK")
@@ -74,7 +78,7 @@ export class PaketBarangPage {
     let data = {
       IDPengiriman:this.IDPengiriman,
       status_pengiriman:this.paket.status_pengiriman,
-      keterangan:this.keterangan
+      keterangan:this.keterangan,
     };   
     this.viewCtrl.dismiss(data).catch(data=>{console.log("gagalnya gak jelas")
     });

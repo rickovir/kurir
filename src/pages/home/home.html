@@ -23,7 +23,7 @@
       <button ion-button color="danger" outline item-end (click)="sortByPrioritas()">Prioritas</button>
     </ion-list-header>
 
-    <ion-item *ngFor="let list of list_pengiriman" (click)="goToDetail(list, list.IDPengiriman)">
+    <ion-item *ngFor="let list of list_pengiriman" (click)="goToDetail(list, list.IDPengiriman, list.IDKurir)">
       <p item-start><b>{{ list.IDPengiriman }}</b></p>
       <p>{{ list.nama_paket }}</p>
       <button ion-button color="primary" outline item-end>{{ getJarak(list.lat,list.lng) }} M</button>

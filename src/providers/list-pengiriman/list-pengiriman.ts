@@ -104,13 +104,16 @@ import { Observable } from 'rxjs/Observable';
   	    return observable;
   	}
 
-    updateStatus(IDPengiriman, status, keterangan):Observable<any>
+    updateStatus(IDPengiriman, IDPaket, no_resi, IDKurir, status, keterangan):Observable<any>
     {
       let send = {
         type : 'ubah_status',
         IDPengiriman : IDPengiriman,
         status_pengiriman:status,
-        keterangan : keterangan
+        keterangan : keterangan,
+        IDKurir:IDKurir,
+        IDPaket:IDPaket,
+        no_resi:no_resi,
       };
       this.socket.emit('list_pengiriman_stream', send);
 
