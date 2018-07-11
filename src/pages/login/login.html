@@ -12,16 +12,30 @@
 
 <ion-content padding>
 	<ion-list>
-	  <img ion-img src="assets/imgs/sample-logo.jpg">
+	  <img ion-img src="assets/imgs/sample-logo.png">
 
 	  <ion-item>
-	    <ion-label floating>Username</ion-label>
-	    <ion-input type="text"></ion-input>
+	    <ion-label floating>IP Forward</ion-label>
+	    <ion-input type="text" [(ngModel)]="ip_forward"></ion-input>
+	  </ion-item>
+
+	  <button ion-button color="primary" block (click)="connect()">CONNECT</button>
+
+	  <ion-item>
+	    <ion-label floating>Cabang</ion-label>
+	    <ion-select [(ngModel)]="server">
+	    	<ion-option *ngFor="let cabang of cabangs" [value]="cabang">Server Cabang {{cabang.nama_cabang}}</ion-option>
+	    </ion-select>
 	  </ion-item>
 
 	  <ion-item>
+	    <ion-label floating>Username</ion-label>
+	    <ion-input type="text" [(ngModel)]="username"></ion-input>
+	  </ion-item>
+	  
+	  <ion-item>
 	    <ion-label floating>Password</ion-label>
-	    <ion-input type="password"></ion-input>
+	    <ion-input type="password" [(ngModel)]="password"></ion-input>
 	  </ion-item>
 
 	  <button ion-button color="primary" block (click)="enter()">LOGIN</button>

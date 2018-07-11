@@ -19,6 +19,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ListPengirimanProvider } from '../providers/list-pengiriman/list-pengiriman';
 import { LokasiProvider } from '../providers/lokasi/lokasi';
 import { PaketBarangProvider } from '../providers/paket-barang/paket-barang';
+import { GeneralProvider } from '../providers/general/general';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { PaketBarangProvider } from '../providers/paket-barang/paket-barang';
     ListPengirimanProvider,
     SQLite,
     LokasiProvider,
-    PaketBarangProvider
+    PaketBarangProvider,
+    GeneralProvider
   ]
 })
 export class AppModule {}
