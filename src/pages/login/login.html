@@ -23,14 +23,14 @@
 
 	  <ion-item>
 	    <ion-label floating>Cabang</ion-label>
-	    <ion-select [(ngModel)]="server">
+	    <ion-select [(ngModel)]="server" (change)="getServer()">
 	    	<ion-option *ngFor="let cabang of cabangs" [value]="cabang">Server Cabang {{cabang.nama_cabang}}</ion-option>
 	    </ion-select>
 	  </ion-item>
 
 	  <ion-item>
 	    <ion-label floating>Username</ion-label>
-	    <ion-input type="text" [(ngModel)]="username"></ion-input>
+	    <ion-input type="text" [(ngModel)]="username" (focus)="getServer()"></ion-input>
 	  </ion-item>
 	  
 	  <ion-item>
@@ -38,7 +38,7 @@
 	    <ion-input type="password" [(ngModel)]="password"></ion-input>
 	  </ion-item>
 
-	  <button ion-button color="primary" block (click)="enter()">LOGIN</button>
+	  <button ion-button color="primary" block (click)="submit()">LOGIN</button>
 	  <!-- <p text-center>Belum Punya Akun ?</p> -->
 	  <!-- <button ion-button color="danger" clear block (click)="gotoRegister()" >Daftar</button> -->
 

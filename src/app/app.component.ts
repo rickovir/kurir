@@ -3,6 +3,7 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+// import { BesarPage } from '../pages/besar/besar';
 import { LoginPage } from '../pages/login/login';
 // import { TabsPage } from '../pages/tabs/tabs';
 // import { PaketBarangPage } from '../pages/paket-barang/paket-barang';
@@ -11,6 +12,7 @@ import { LoginPage } from '../pages/login/login';
   templateUrl: 'app.html'
 })
 export class MyApp {
+  // rootPage:any = BesarPage;
   rootPage:any = LoginPage;
   // rootPage:any = TabsPage;
   // rootPage:any = PaketBarangPage;

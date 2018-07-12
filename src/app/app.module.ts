@@ -10,6 +10,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
+import { BesarPage } from '../pages/besar/besar';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { PaketBarangPage } from '../pages/paket-barang/paket-barang';
@@ -20,6 +21,7 @@ import { ListPengirimanProvider } from '../providers/list-pengiriman/list-pengir
 import { LokasiProvider } from '../providers/lokasi/lokasi';
 import { PaketBarangProvider } from '../providers/paket-barang/paket-barang';
 import { GeneralProvider } from '../providers/general/general';
+import { ListPengirimanBesarProvider } from '../providers/list-pengiriman-besar/list-pengiriman-besar';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { GeneralProvider } from '../providers/general/general';
     ContactPage,
     HomePage,
     TabsPage,
+    BesarPage,
     LoginPage,
     PaketBarangPage
   ],
@@ -44,6 +47,7 @@ import { GeneralProvider } from '../providers/general/general';
     ContactPage,
     HomePage,
     TabsPage,
+    BesarPage,
     LoginPage,
     PaketBarangPage
   ],
@@ -56,7 +60,8 @@ import { GeneralProvider } from '../providers/general/general';
     SQLite,
     LokasiProvider,
     PaketBarangProvider,
-    GeneralProvider
+    GeneralProvider,
+    ListPengirimanBesarProvider
   ]
 })
 export class AppModule {}

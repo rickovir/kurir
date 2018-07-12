@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import { ListPengiriman } from '../../models/ListPengiriman';
 import { PaketBarang } from '../../models/PaketBarang';
 
+import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs/Observable';
 
 /*
@@ -18,12 +19,15 @@ import { Observable } from 'rxjs/Observable';
   	socketUrl:string;
   	socket:any;
 
-  	constructor(public http: Http) {
+  constructor(private storage:Storage) {
   		console.log('Hello ListPengirimanProvider Provider');
-  		this.socketUrl = "http://localhost:3000";
-  		this.socket = io(this.socketUrl);
-  		this.socket.connect();
   	}
+    public initConnect(IP)
+    {
+      this.socketUrl = IP;
+      this.socket = io(this.socketUrl);
+      this.socket.connect();
+    }
 
   	public initData(data):void
   	{
@@ -125,5 +129,11 @@ import { Observable } from 'rxjs/Observable';
           });
         })
       return observable;
+    }
+
+    sendStatusOnline(status)
+    {
+
+      this.socket.emit("kurir_status", status);
     }
 }

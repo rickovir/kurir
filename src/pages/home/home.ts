@@ -19,6 +19,7 @@ export class HomePage {
   	directionsService = new google.maps.DirectionsService;
 	list_pengiriman:Array<ListPengiriman>;
 	paket_barang:Array<PaketBarang>;
+	IDKurir:number;
 
 	lat:number;
 	lng:number;
@@ -31,46 +32,67 @@ export class HomePage {
 	    public viewCtrl:ViewController,
 		private storage:Storage, 
 		public modalCtrl:ModalController) {
-		this.isOnline = false;
-		this.paket_barang = [];
-		this.list_pengiriman = [];
-
-		setTimeout(()=>{
-			this.lokasiProvider.findKota();
-		},3000);
-
-		this.init();
-
-		this.synData();
-
-		this.cekKota();
-
-		setTimeout(()=>{
-			if(this.list_pengiriman.length == 0)
-			{
-				this.storage.get('list_pengiriman_data').then(data=>{
-					this.list_pengiriman = data;
-				});
-				this.storage.get('paket_barang_data').then(data=>{
-					this.paket_barang = data;
-				});
-			}
-		}, 3000);
-
-		this.listPengirimanProvider.getStatusConnect().subscribe(
+		this.IDKurir = 0;
+		this.storage.get("IDKurir").then(
 			data=>{
-				this.isOnline = data.connectWs;
+				this.IDKurir = parseInt(data);
 			});
-
-		this.listPengirimanProvider.getStatusDisconect().subscribe(
+		this.storage.get('IP').then(
 			data=>{
-				this.isOnline = data.connectWs;
+				this.listPengirimanProvider.initConnect(data);
+				this.isOnline = false;
+				this.paket_barang = [];
+				this.list_pengiriman = [];
+
+				setTimeout(()=>{
+					this.lokasiProvider.findKota();
+				},3000);
+
+				this.init();
+
+				this.synData();
+
+				this.cekKota();
+
+				setTimeout(()=>{
+					if(this.list_pengiriman.length == 0)
+					{
+						this.storage.get('list_pengiriman_data').then(data=>{
+							this.list_pengiriman = data;
+						});
+						this.storage.get('paket_barang_data').then(data=>{
+							this.paket_barang = data;
+						});
+					}
+				}, 3000);
+
+				this.listPengirimanProvider.getStatusConnect().subscribe(
+					data=>{
+						this.isOnline = data.connectWs;
+						var status = {
+							IDKurir:this.IDKurir,
+							isActive:'Y'
+						}
+						this.listPengirimanProvider.sendStatusOnline(status);
+					});
+
+				this.listPengirimanProvider.getStatusDisconect().subscribe(
+					data=>{
+						this.isOnline = data.connectWs;
+						var status = {
+							IDKurir:this.IDKurir,
+							isActive:'N'
+						}
+						this.listPengirimanProvider.sendStatusOnline(status);
+					});
 			});
 	}
 
 	init()
 	{
-		this.listPengirimanProvider.initData(1);
+		this.storage.get("IDKurir").then(data=>{
+			this.listPengirimanProvider.initData(data);	
+		})
 		this.listPengirimanProvider.showCurrentData().subscribe(
 			(data:ListPengiriman[])=>{
 				this.list_pengiriman = data;
@@ -94,8 +116,12 @@ export class HomePage {
 			(data:any)=>{
 				if(data.type == "add")
 				{
-					this.list_pengiriman.push(data.data);
 					console.log(data);
+					var newData = data.data;
+					for(var i = 0; i<newData.length; i++)
+					{
+						this.list_pengiriman.push(newData[i]);
+					}
 					this.storage.set('list_pengiriman_data', this.list_pengiriman);
 				}
 				else if(data.type == "ubah_status")
@@ -110,6 +136,10 @@ export class HomePage {
 						return list;
 	    			})
 	    			console.log(data.data);
+				}
+				else if(data.type == "delete")
+				{
+					this.list_pengiriman = this.list_pengiriman.filter(list=>list.IDPengiriman!==data.IDPengiriman);
 				}
 			});
 		this.listPengirimanProvider.getListPengirimanPaketBarang().subscribe(

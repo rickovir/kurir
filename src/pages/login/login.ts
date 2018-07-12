@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { TabsPage } from '../../pages/tabs/tabs';
+import { HomePage } from '../../pages/home/home';
+import { BesarPage } from '../../pages/besar/besar';
+// import { TabsPage } from '../../pages/tabs/tabs';
 import { GeneralProvider } from '../../providers/general/general';
 import { Storage } from '@ionic/storage';
 import * as io from 'socket.io-client';
@@ -59,35 +61,46 @@ export class LoginPage {
       console.log(data);
     });
   }
-  submit():void
+  getServer()
   {
+    this.storage.set("socketUrl", this.server.IP);
+    this.storage.set("IDCabang", this.server.IDCabang);
+    this.storage.set("nama_cabang", this.server.nama_cabang);
+    this.storage.set("IP", this.server.IP);
+    console.log(this.server);
+    this.generalProvider.initConnect(this.server.IP);
+  }
+  submit()
+  {
+
 
     let data = {
       IDKurir : this.username,
       password :this.password
     }
     let total = 0;
-    this.socket.emit("login_kurir", data);
-    let observable:Observable<any> = new Observable(
-      (observer) => {
-      this.socket.on('login_kurir_feedback', 
-        (data) => {
-        observer.next(data);
-        });
+    this.generalProvider.callLogin(data);
+    this.generalProvider.receiveLogin().subscribe(
+      data=>{
+        console.log(data);
+        total = data.total;
+        this.gotoHome(total, data.jenis);
       });
-    observable.subscribe((data)=>{
-      total = data.total;
-    });
+  }
+
+  gotoHome(total, jenis)
+  {
     if(total > 0){
       console.log("success login");
       this.storage.set("username",this.username);
       this.storage.set("password",this.password);
-      this.storage.set("socketUrl", this.server.IP);
-
-      this.storage.set("IDCabang", this.server.IDCabang);
-      this.storage.set("nama_cabang", this.server.nama_cabang);
-      this.storage.set("IP", this.server.IP);
-
+      this.storage.set("IDKurir", this.username);
+      if(jenis == "MTR"){
+        this.navCtrl.setRoot(HomePage);
+      }
+      else{
+        this.navCtrl.setRoot(BesarPage);
+      }
       // this.navCtrl.setRoot(TabsPage);
       this.username = "success";
       this.password = "success";
@@ -104,7 +117,8 @@ export class LoginPage {
 
   enter():void
   {
-  	this.navCtrl.setRoot(TabsPage);
+    this.navCtrl.setRoot(HomePage);
+  	// this.navCtrl.setRoot(TabsPage);
   }
 
 }

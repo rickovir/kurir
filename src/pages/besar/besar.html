@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Task Pengiriman Kurir</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="initData()" color="primary" icon-start>
+        <ion-icon name="cloud-done"></ion-icon>
+        Refresh
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+  		<ion-item>
+	    	<ion-label floating>Cabang</ion-label>
+  			<ion-select  [(ngModel)]="IP">
+  				<ion-option *ngFor="let cb of cabangs" value="{{cb.IP}}">{{cb.IDCabang}} - {{cb.nama_cabang}}</ion-option>
+  			</ion-select>
+  			<button ion-button item-end (click)="change()">Ganti</button>
+  		</ion-item>
+	  <ion-item *ngFor="let data of list_pengiriman_besar">
+	    <h2>Tujuan {{ getNamaServer(data.IDCabangTujuan) }}</h2>
+	    <p>Asal {{ getNamaServer(data.IDCabangAsal) }}</p>
+	    <button ion-button clear item-end (click)="sendData(data.IDListPengirimanBesar)">Sampai</button>
+	    <button ion-button clear item-end (click)="loadData(data.IDListPengirimanBesar)">Load</button>
+	  </ion-item>
+  </ion-list>
+
+</ion-content>
